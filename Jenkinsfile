@@ -3,7 +3,7 @@ agent any
 
 
 environment {
-    PYTHON = "C:\\Users\\suhas\\Desktop\\downloads"
+    PYTHON = "C:\\Users\\suhas\\Desktop\\downloads\\python.exe"
     IMAGE_NAME = "devops-project"
     CONTAINER_NAME = "devops-container"
 }
