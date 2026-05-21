@@ -1,7 +1,9 @@
 pipeline {
 agent any
 
+```
 environment {
+    PYTHON = "C:\\Users\\suhas\\Desktop\\downloads"
     IMAGE_NAME = "devops-project"
     CONTAINER_NAME = "devops-container"
 }
@@ -10,42 +12,39 @@ stages {
 
     stage('Clone Repository') {
         steps {
-            echo 'Cloning GitHub repository...'
+
+            echo 'Cloning GitHub Repository...'
 
             git branch: 'main',
             url: 'https://github.com/SuhasRaj-21/dev-ops.git'
         }
     }
 
-    stage('Install Dependencies') {
+    stage('Verify Python') {
         steps {
-            echo 'Installing Python dependencies...'
 
-            bat 'python -m pip install --upgrade pip'
-
-            bat 'pip install -r requirements.txt'
+            bat '"%PYTHON%" --version'
         }
     }
 
-    stage('Verify Python') {
+    stage('Install Dependencies') {
         steps {
-            echo 'Checking Python installation...'
 
-            bat 'python --version'
+            bat '"%PYTHON%" -m pip install --upgrade pip'
+
+            bat '"%PYTHON%" -m pip install -r requirements.txt'
         }
     }
 
     stage('Build Docker Image') {
         steps {
-            echo 'Building Docker image...'
 
             bat 'docker build -t %IMAGE_NAME% .'
         }
     }
 
-    stage('Stop Existing Container') {
+    stage('Stop Old Container') {
         steps {
-            echo 'Stopping old container if exists...'
 
             bat 'docker stop %CONTAINER_NAME% || exit 0'
 
@@ -55,15 +54,13 @@ stages {
 
     stage('Run Docker Container') {
         steps {
-            echo 'Running Docker container...'
 
             bat 'docker run -d -p 5000:5000 --name %CONTAINER_NAME% %IMAGE_NAME%'
         }
     }
 
-    stage('Check Running Containers') {
+    stage('Check Docker Containers') {
         steps {
-            echo 'Checking Docker containers...'
 
             bat 'docker ps'
         }
@@ -73,12 +70,15 @@ stages {
 post {
 
     success {
-        echo 'CI/CD Pipeline executed successfully!'
+
+        echo 'Pipeline executed successfully!'
     }
 
     failure {
-        echo 'Pipeline failed. Check console output.'
+
+        echo 'Pipeline execution failed!'
     }
 }
+```
 
 }
