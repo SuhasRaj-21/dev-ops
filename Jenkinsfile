@@ -1,7 +1,7 @@
 pipeline {
 agent any
 
-```
+
 environment {
     PYTHON = "C:\\Users\\suhas\\Desktop\\downloads"
     IMAGE_NAME = "devops-project"
@@ -79,6 +79,6 @@ post {
         echo 'Pipeline execution failed!'
     }
 }
-```
+
 
 }
